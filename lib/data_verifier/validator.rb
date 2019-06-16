@@ -28,24 +28,10 @@ module DataVerifier
     end
 
     private
-    def data_file_name(tag)
-      "#{identifier}#{tag}.json"
-    end
-
-    def identifier
-      @config.data_identifier.nil? ? '' : "#{@config.data_identifier}_"
-    end
-
     def update_excel(excel, sheet_name, data)
       data_before_replication = JSON.parse(File.read(data_file_name(sheet_name)))
 
       excel.workbook.add_worksheet(name: sheet_name.to_s) do |s|
-        red_color = Axlsx::Color.new
-        red_color.rgb = 'C40101'
-
-        white_color = Axlsx::Color.new
-        white_color.rgb = 'FFFFFF'
-
         header_style = s.styles.add_style bg_color: "43B275", b: true, sz: 16, alignment: {horizontal: :center}, color: white_color
         data_style = s.styles.add_style sz: 13, alignment: {:horizontal => :left}
         error_data_style = s.styles.add_style sz: 12, alignment: {:horizontal => :left}, color: red_color, b: true
@@ -69,6 +55,28 @@ module DataVerifier
           s.add_row ["", "", ""]
         end
       end
+    end
+
+    def data_file_name(tag)
+      "#{identifier}#{tag}.json"
+    end
+
+    def identifier
+      @config.data_identifier.nil? ? '' : "#{@config.data_identifier}_"
+    end
+
+    def red_color
+      red_color = Axlsx::Color.new
+      red_color.rgb = 'C40101'
+
+      red_color
+    end
+
+    def white_color
+      white_color = Axlsx::Color.new
+      white_color.rgb = 'FFFFFF'
+
+      white_color
     end
   end
 end
