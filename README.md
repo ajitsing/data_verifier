@@ -62,6 +62,10 @@ After comparision it will create an excel file of the result.
 DataVerifier::Validator.new(config).generate_validation_file
 ```
 
+#### Result:
+
+<img src="https://github.com/ajitsing/ScreenShots/blob/master/data_verifier/data_verifier_result.png"/>
+
 ## License
 ```license
 MIT License
