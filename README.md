@@ -50,7 +50,10 @@ end
 The below code will execute all the queries and store their result in json files.
 
 ```ruby
-DataVerifier::BaselineBuilder.new(config).build
+DataVerifier::BaselineBuilder.new
+      .with(db1_config)
+      .with(db2_config)
+      .build
 ```
 
 #### Verification:
@@ -59,7 +62,10 @@ Below code will again execute the queries and will compare it with the baseline 
 After comparision it will create an excel file of the result.
 
 ```ruby
-DataVerifier::Validator.new(config).generate_validation_file
+DataVerifier::Validator.new("data_sanity_report")
+      .validate_using(ps_config)
+      .validate_using(re_config)
+      .generate_report
 ```
 
 #### Result:
