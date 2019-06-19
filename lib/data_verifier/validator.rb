@@ -10,13 +10,7 @@ module DataVerifier
     end
 
     def validate_using(config)
-      db = Sequel.connect(adapter: config.db_adapter,
-                          user: config.db_user,
-                          password: config.db_password,
-                          host: config.db_host,
-                          port: config.db_port,
-                          database: config.db_name,
-                          max_connections: config.db_max_connections)
+      db = create_db_connection(config)
 
       config.queries.each do |tag, query|
         puts "Executing => #{query}\n"
