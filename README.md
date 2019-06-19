@@ -1,5 +1,13 @@
 # data_verifier
 
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/ajitsing/data_verifier/graphs/commit-activity)
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=102)](https://opensource.org/licenses/MIT)
+[![Gem Version](https://badge.fury.io/rb/data_verifier.svg)](https://badge.fury.io/rb/data_verifier)
+[![HitCount](http://hits.dwyl.io/ajitsing/data_verifier.svg)](http://hits.dwyl.io/ajitsing/data_verifier)
+![Gem Downloads](http://ruby-gem-downloads-badge.herokuapp.com/data_verifier?type=total)
+[![Build Status](https://travis-ci.org/ajitsing/data_verifier.svg?branch=master)](https://travis-ci.org/ajitsing/data_verifier)
+[![Twitter Follow](https://img.shields.io/twitter/follow/Ajit5ingh.svg?style=social)](https://twitter.com/Ajit5ingh)
+
 There are times when we change the approach of modifying data and want to verify
 that the data modified by the new approach is same as the old approach.
 This gem is build for such verifications.
