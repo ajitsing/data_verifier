@@ -9,46 +9,36 @@ describe DataVerifier::Validator do
     end
 
     it 'should create result excel file' do
+      queries = {
+          users_table: 'select * from users where id=100',
+          addresses_table: 'select * from addresses where user_id=100'
+      }
+
       config = DataVerifier::Config.new do |c|
-        c.data_identifier = 'rspec'
-        c.queries = {q1: 'select * from users', q2: 'select * from addresses where user_id=1'}
+        c.data_identifier = '100'
+        c.queries = queries
       end
 
-      validator = DataVerifier::Validator.new(config)
-
-      excel = double(:execel)
+      excel = double(:excel)
       expect(Axlsx::Package).to receive(:new).and_return(excel)
 
-      expect(db).to receive(:fetch).with('select * from users').and_return(double(:users))
-      expect(db).to receive(:fetch).with('select * from addresses where user_id=1').and_return(double(:addresses))
+      validator = DataVerifier::Validator.new('test_result')
 
-      expect(File).to receive(:read).with('rspec_q1.json').and_return("{}")
-      expect(File).to receive(:read).with('rspec_q2.json').and_return("{}")
+      expect(db).to receive(:fetch).with(queries[:users_table]).and_return(double(:users))
+      expect(db).to receive(:fetch).with(queries[:addresses_table]).and_return(double(:addresses))
 
+      expect(File).to receive(:read).with('100_users_table.json').and_return("{}")
+      expect(File).to receive(:read).with('100_addresses_table.json').and_return("{}")
 
       work_book = double(:workbook)
       expect(excel).to receive(:workbook).and_return(work_book).twice
 
-      expect(work_book).to receive(:add_worksheet).with(name: 'q1')
-      expect(work_book).to receive(:add_worksheet).with(name: 'q2')
+      expect(work_book).to receive(:add_worksheet).with(name: 'users_table')
+      expect(work_book).to receive(:add_worksheet).with(name: 'addresses_table')
 
-      expect(excel).to receive(:serialize).with('rspec_data_verifier_result.xlsx')
+      expect(excel).to receive(:serialize).with('test_result.xlsx')
 
-      validator.generate_validation_file
-    end
-
-    it 'should create result excel file' do
-      config = DataVerifier::Config.new do |c|
-        c.queries = {}
-      end
-
-      validator = DataVerifier::Validator.new(config)
-
-      excel = double(:execel)
-      expect(Axlsx::Package).to receive(:new).and_return(excel)
-      expect(excel).to receive(:serialize).with('data_verifier_result.xlsx')
-
-      validator.generate_validation_file
+      validator.validate_using(config).generate_report
     end
   end
 end
