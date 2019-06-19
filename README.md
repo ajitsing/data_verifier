@@ -63,8 +63,8 @@ After comparision it will create an excel file of the result.
 
 ```ruby
 DataVerifier::Validator.new("data_sanity_report")
-      .validate_using(ps_config)
-      .validate_using(re_config)
+      .validate_using(db1_config)
+      .validate_using(db2_config)
       .generate_report
 ```
 
