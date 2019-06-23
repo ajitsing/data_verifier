@@ -53,15 +53,20 @@ config = DataVerifier::Config.new do |c|
 end
 ```
 
+#### Inspector
+Create an inspector to run in both build and verify mode.
+
+```ruby
+configs = [config1, config2, config3]
+inspector = DataVerifier::Inspector.new(configs, report_name: 'my_awesome_report')
+```
+
 #### Building Baseline Data:
 
 The below code will execute all the queries and store their result in json files.
 
 ```ruby
-DataVerifier::BaselineBuilder.new
-      .with(db1_config)
-      .with(db2_config)
-      .build
+inspector.inspect(phase: :BUILD)
 ```
 
 #### Verification:
@@ -70,10 +75,7 @@ Below code will again execute the queries and will compare it with the baseline 
 After comparision it will create an excel file of the result.
 
 ```ruby
-DataVerifier::Validator.new("data_sanity_report")
-      .validate_using(db1_config)
-      .validate_using(db2_config)
-      .generate_report
+inspector.inspect(phase: :VERIFY)
 ```
 
 #### Result:
